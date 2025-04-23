@@ -1,0 +1,55 @@
+# 📊 Probability Analysis using R
+
+This project demonstrates how to analyze a continuous probability distribution using R and the `integrate()` function to compute key statistical measures. The probability density function in question is:
+
+> **f(x) = 16·x·e⁻⁴ˣ** for x ≥ 0  
+> **f(x) = 0** otherwise
+
+This function defines a gamma distribution, and I used it to perform the following analyses:
+
+## 🔹 A. Tail Probability
+Computed the probability that the random variable X exceeds 1.5:
+```R
+P(X > 1.5)
+
+Output: 0.01735126
+
+## 🔹 B. Find the probability that 1.5 < X < 2.5
+This code calculated the probability that the random variable X lies between 1.5 and 2.5.: 
+
+integrate(f, lower = 1.5, upper = 2.5)
+
+Output: 0.01685187
+
+## 🔹 C. Find the expected value of X
+To calculate the expected value E(X), we integrate x·f(x) from 0 to ∞:
+
+integrate(function(x) x * f(x), lower = 0, upper = Inf)
+
+Output: 0.5
+
+## 🔹 D. Variance of X
+I calculate E(X²) first, then use the formula: Var(X) = E(X²) − [E(X)]²:
+
+expected_X2 <- integrate(function(x) x^2 * f(x), lower = 0, upper = Inf)$value
+variance_X <- expected_X2 - expected_X^2
+
+Output: 0.125
+
+## 🔹 E. The standard deviation of X
+The standard deviation is the square root of the variance:
+
+std_dev_X <- sqrt(variance_X)
+
+Output:0.3535534
+I calculated the probability that X is within 0.75 standard deviations of the expected value:
+## F. The probability that X is within 0.75 standard deviations of its expected value
+
+lower_bound <- expected_X - 0.75 * std_dev_X
+upper_bound <- expected_X + 0.75 * std_dev_X
+prob_within_075_sd <- integrate(f, lower = lower_bound, upper = upper_bound) 
+
+Output: 0.5677911 
+
+This project demonstrates how to work with continuous probability distributions using R. I explored key statistical properties like expectation, variance, and probabilities over defined intervals using integration.
+
